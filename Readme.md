@@ -2,7 +2,7 @@
 =====================
 ## Designed for the discord server "TroubleHome"
 -----------------------------------
-####The bot implements the management and storage of "troublecoin" currency.
+#### The bot implements the management and storage of "troublecoin" currency.
 
 > Each user has an active "coin" balance and an account to earn all the time.
 > Users can make their own coins transfers to each other.
