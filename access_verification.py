@@ -11,8 +11,8 @@ async def role_access(ctx) -> bool:
     for i in ctx.author.roles:
         if i.id == config.role_keeper or i.id == config.role_owner:
             return True
-        else:
-            return False
+    else:
+        return False
 
 
 async def non_access(ctx) -> None:
