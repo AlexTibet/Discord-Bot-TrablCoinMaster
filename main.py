@@ -7,9 +7,7 @@ import access_verification as access
 
 
 def on_find_member(member_id: str) -> print:
-    """
-    Checking user availability in the database. If there is no user, then add him
-    """
+    """Checking user availability in the database. If there is no user, then add him"""
     if sql_fun.simple_find_member(member_id):
         print(member_id, 'member fined')
     else:
@@ -40,7 +38,7 @@ if __name__ == '__main__':
 
     @Bot.command()
     async def coins(ctx, nik_name=None):
-        """Информация о личном счёте"""
+        """info about member coins"""
         if nik_name is None:
             nik_name = ctx.author.id
         else:
@@ -123,8 +121,8 @@ if __name__ == '__main__':
         if int(ctx.author.id) == int(nik_name):
             await ctx.send(f"<@!{ctx.author.id}> зачем делать переводы самому себе? :thinking:\n`Не надо так...`")
         else:
-            on_find_member(ctx.author.id)
-            on_find_member(nik_name)
+            # on_find_member(ctx.author.id)
+            # on_find_member(nik_name)
             tra = int(transfer)
             row_au = sql_fun.check_balance(ctx.author.id)
             if row_au[0][1] < tra:
@@ -197,20 +195,5 @@ if __name__ == '__main__':
         else:
             await access.non_access(ctx)
 
-
-    # @Bot.event
-    # async def on_raw_reaction_add(ctx) -> None:
-    #     """
-    #     Func for future
-    #     :param ctx:
-    #     :return:
-    #     """
-    #     react_author = f'<@{ctx.user_id}>'
-    #     react_author_id = ctx.user_id
-    #     gu = ctx.member.guild
-    #     print(gu)
-    #     print(gu.members)
-    #     channel = Bot.get_channel(ctx.channel_id)
-    #     await channel.send(f"`I see You` {react_author}")
 
     Bot.run(config.token)
