@@ -42,7 +42,7 @@ if __name__ == '__main__':
         if nik_name is None:
             nik_name = ctx.author.id
         else:
-            nik_name = nik_name[3:-1]
+            nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
         on_find_member(nik_name)
         row = sql_fun.check_balance(nik_name)
         emb = discord.Embed(title=f'Cчёт: {row[0][1]} troublecoins', color=0xDAA520)
@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
         return message with embed info
         """
-        nik_name = nik_name[3:-1]
+        nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
         if await access.role_access(ctx):
             on_find_member(nik_name)
             tc = int(add_value)
@@ -96,7 +96,7 @@ if __name__ == '__main__':
     @Bot.command()
     async def coins_remove(ctx, nik_name, re_value):
         """Снятие койнов со счёта"""
-        nik_name = nik_name[3:-1]
+        nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
         if await access.role_access(ctx):
             on_find_member(nik_name)
             tca = int(re_value)
@@ -117,12 +117,12 @@ if __name__ == '__main__':
     @Bot.command()
     async def coins_transfer(ctx, nik_name, transfer):
         """Перевод койнов со своего счёта на счёт другого игрока"""
-        nik_name = nik_name[3:-1]
+        nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
         if int(ctx.author.id) == int(nik_name):
             await ctx.send(f"<@!{ctx.author.id}> зачем делать переводы самому себе? :thinking:\n`Не надо так...`")
         else:
-            # on_find_member(ctx.author.id)
-            # on_find_member(nik_name)
+            on_find_member(ctx.author.id)
+            on_find_member(nik_name)
             tra = int(transfer)
             row_au = sql_fun.check_balance(ctx.author.id)
             if row_au[0][1] < tra:
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     @Bot.command()
     async def fullcoins_add(ctx, nik_name, add_value):
         """Начисление койнов на счёт за всё время"""
-        nik_name = nik_name[3:-1]
+        nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
         if await access.role_access(ctx):
             on_find_member(nik_name)
             tc = int(add_value)
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     @Bot.command()
     async def fullcoins_remove(ctx, nik_name, re_value):
         """Снятие койнов со счёта за всё время"""
-        nik_name = nik_name[3:-1]
+        nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
         if await access.role_access(ctx):
             on_find_member(nik_name)
             tc = int(re_value)
