@@ -20,6 +20,30 @@ def on_find_member(member_id: str) -> print:
                 print('Member not find in discord server')
 
 
+async def coins_add_to_member(ctx, nik_name, add_value):
+    on_find_member(nik_name)
+    tc = int(add_value)
+    row = sql_fun.check_balance(nik_name)
+    tca = row[0][1] + tc
+    tcf = row[0][2] + tc
+    sql_fun.update_balance_full(nik_name, tca, tcf)
+
+    emb = discord.Embed(title=f'Счёт: {tca}',
+                        color=0xDAA520
+                        )
+    emb.set_thumbnail(url=config.img_t_coin)
+
+    emb.add_field(name='ID:{}'.format(nik_name), value=f'Счёт за всё время: {tcf}')
+
+    emb.set_author(name=f'Пополнение баланса на {add_value} troublecoins!')
+
+    emb.set_footer(text=f'{ctx.author} оформляет начисление {add_value} troublecoins на ваш счёт',
+                   icon_url=config.img_t_coin
+                   )
+    await ctx.send("<@{0}>\n".format(nik_name), embed=emb)
+    return True
+
+
 if __name__ == '__main__':
     Bot = commands.Bot(command_prefix="th@")
     Bot.remove_command('help')
@@ -70,29 +94,20 @@ if __name__ == '__main__':
 
         return message with embed info
         """
-        if ctx.channel.id in config.coin_channels:
-            nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
+
+        if ctx.channel.id == 703495297514340424:
             if await access.role_access(ctx):
-                on_find_member(nik_name)
-                tc = int(add_value)
-                row = sql_fun.check_balance(nik_name)
-                tca = row[0][1] + tc
-                tcf = row[0][2] + tc
-                sql_fun.update_balance_full(nik_name, tca, tcf)
-
-                emb = discord.Embed(title=f'Счёт: {tca}',
-                                    color=0xDAA520
-                                    )
-                emb.set_thumbnail(url=config.img_t_coin)
-
-                emb.add_field(name='ID:{}'.format(nik_name), value=f'Счёт за всё время: {tcf}')
-
-                emb.set_author(name=f'Пополнение баланса на {add_value} troublecoins!')
-
-                emb.set_footer(text=f'{ctx.author} оформляет начисление {add_value} troublecoins на ваш счёт',
-                               icon_url=config.img_t_coin
-                               )
-                await ctx.send("<@{0}>\n".format(nik_name), embed=emb)
+                if len(ctx.message.role_mentions) > 0:
+                    target_role = int(ctx.message.role_mentions[0].id)
+                    for member in ctx.guild.members:
+                        for role in member.roles:
+                            if role.id == target_role:
+                                nik_name = member.id
+                                await coins_add_to_member(ctx, nik_name, add_value)
+                else:
+                    nik_name = nik_name.replace('<', '').replace('!', '').replace('@', '').replace('>', '')
+                    if await access.role_access(ctx):
+                        await coins_add_to_member(ctx, nik_name, add_value)
             else:
                 await access.non_access(ctx)
 
