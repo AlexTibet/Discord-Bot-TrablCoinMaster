@@ -8,11 +8,12 @@
 > Users can make their own coins transfers to each other.
 >
 > Only the user with the access role can make changes to the account (depositing or withdrawing from the account).
-
+> Users can won or lost coins in casino (chances settings and descriptions in config.py)
+>
 For data storage the "Postgres SQL" database is used.
 
-Название файла  		| Содержание файла
+File name  		        | File content
 ------------------------|----------------------
-main.py       			| Основной модуль содержащий инициализацию бота, его комманды и события
-sql_fun.py      		| Модуль для работы с базой данных (PostgressSQL)
-access_verification   	| Модуль с функциями для проверки доступа к командам бота
+main.py       			| The main module containing the initialization of the bot, its commands and events
+sql_fun.py      		| Module to work with the database (PostgresQL)
+access_verification   	| Module with functions for checking access to bot commands
