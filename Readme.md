@@ -1,6 +1,6 @@
 # Discord Bot "TrablCoinMaster"
 =====================
-## Designed for the discord server "TroubleHome"
+## Designed for the discord guild "TroubleHome"
 -----------------------------------
 #### The bot implements the management and storage of "troublecoin" currency.
 
